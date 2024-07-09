@@ -1,8 +1,8 @@
-﻿// <copyright file="CustomTouristInfoPanel.cs" company="dymanoid">
+// <copyright file="CustomTouristInfoPanel.cs" company="dymanoid">
 // Copyright (c) dymanoid. All rights reserved.
 // </copyright>
 
-namespace Snooper
+namespace Snooper.Panels
 {
     /// <summary>
     /// A customized citizen info panel that additionally shows the origin building of the toursit.

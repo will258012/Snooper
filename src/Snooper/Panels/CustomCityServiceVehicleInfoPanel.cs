@@ -1,8 +1,8 @@
-﻿// <copyright file="CustomCityServiceVehicleInfoPanel.cs" company="dymanoid">
+// <copyright file="CustomCityServiceVehicleInfoPanel.cs" company="dymanoid">
 // Copyright (c) dymanoid. All rights reserved.
 // </copyright>
 
-namespace Snooper
+namespace Snooper.Panels
 {
     /// <summary>
     /// A customized service vehicle info panel that additionally shows the origin building of the service vehicles.
@@ -36,7 +36,7 @@ namespace Snooper
             }
 
             ushort leadingVehicle = VehicleManager.instance.m_vehicles.m_buffer[instance.Vehicle].GetFirstVehicle(instance.Vehicle);
-            ref Vehicle vehicle = ref VehicleManager.instance.m_vehicles.m_buffer[leadingVehicle];
+            ref var vehicle = ref VehicleManager.instance.m_vehicles.m_buffer[leadingVehicle];
             ushort originBuilding;
             if ((vehicle.m_flags & Vehicle.Flags.GoingBack) == 0)
             {

@@ -2,10 +2,10 @@
 // Copyright (c) dymanoid. All rights reserved.
 // </copyright>
 
-namespace Snooper
+namespace Snooper.Panels
 {
     using System;
-    using SkyTools.Patching;
+    using Snooper.Utils;
     using UnityEngine;
 
     /// <summary>

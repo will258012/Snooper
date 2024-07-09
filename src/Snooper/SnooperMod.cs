@@ -4,11 +4,11 @@
 
 namespace Snooper
 {
-    using System.Collections.Generic;
+    using System.Reflection;
     using ICities;
-    using SkyTools.Patching;
-    using SkyTools.Tools;
-    using UnityEngine;
+    using Snooper.Panels;
+    using Snooper.Patches;
+    using Snooper.Utils;
 
     /// <summary>
     /// The main class of the Snooper mod.
@@ -17,30 +17,30 @@ namespace Snooper
     {
         private const string HarmonyId = "com.cities_skylines.dymanoid.snooper";
 
-        private readonly string modVersion = GitVersion.GetAssemblyVersion(typeof(SnooperMod).Assembly);
-        private MethodPatcher patcher;
+        private string modVersion
+        {
+            get
+            {
+                var assemblyVersion = ModAssembly.GetName().Version;
+                return $"{assemblyVersion.Major}.{assemblyVersion.Minor}.{assemblyVersion.Build}";
+            }
+        }
 
         /// <summary>
         /// Gets the name of this mod.
         /// </summary>
-        public string Name => "Snooper";
+        public string Name => "Snooper " + modVersion;
 
         /// <summary>
         /// Gets the description string of this mod.
         /// </summary>
-        public string Description => "Shows additional information about citizens and tourists. Version: " + modVersion;
+        public string Description => "Shows additional information about citizens and tourists.";
 
         /// <summary>Called when this mod is enabled.</summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Must be instance method due to C:S API")]
-        public void OnEnabled()
-        {
-            Log.SetupDebug(Name);
-            Log.Info("The 'Snooper' mod has been enabled, version: " + modVersion);
-        }
+        public void OnEnabled() => Log.Msg("Mod has been enabled, version: " + modVersion);
 
         /// <summary>Called when this mod is disabled.</summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic", Justification = "Must be instance method due to C:S API")]
-        public void OnDisabled() => Log.Info("The 'Snooper' mod has been disabled.");
+        public void OnDisabled() => Log.Msg("Mod has been disabled.");
 
         /// <summary>
         /// Called when a game level is loaded. If applicable, activates the Snooper mod
@@ -61,25 +61,14 @@ namespace Snooper
                 default:
                     return;
             }
-
-            IPatch[] patches =
+            try
             {
-                WorldInfoPanelPatches.UpdateBindings,
-                HumanAIPatches.StartMoving1,
-                HumanAIPatches.StartMoving2,
-                CargoTruckAIPatches.SetTarget,
-            };
-
-            patcher = new MethodPatcher(HarmonyId, patches);
-
-            var patchedMethods = patcher.Apply();
-            if (patchedMethods.Count != patches.Length)
-            {
-                Debug.LogError("The 'Snooper' mod failed to perform method redirections");
-                patcher.Revert();
-                return;
+                HarmonyPatcher.PatchOnReady(ModAssembly, HarmonyId);
             }
-
+            catch (System.IO.FileNotFoundException e)
+            {
+                Log.Err("Assembly of Harmony is missing: " + e.Message);
+            }
             WorldInfoPanelPatches.CitizenInfoPanel = CustomCitizenInfoPanel.Enable();
             WorldInfoPanelPatches.TouristInfoPanel = CustomTouristInfoPanel.Enable();
             WorldInfoPanelPatches.CitizenVehicleInfoPanel = CustomCitizenVehicleInfoPanel.Enable();
@@ -92,8 +81,7 @@ namespace Snooper
         /// </summary>
         public override void OnLevelUnloading()
         {
-            patcher?.Revert();
-            patcher = null;
+            HarmonyPatcher.TryUnpatch(HarmonyId);
 
             WorldInfoPanelPatches.CitizenInfoPanel?.Disable();
             WorldInfoPanelPatches.CitizenInfoPanel = null;
@@ -107,5 +95,6 @@ namespace Snooper
             WorldInfoPanelPatches.ServiceVehicleInfoPanel?.Disable();
             WorldInfoPanelPatches.ServiceVehicleInfoPanel = null;
         }
+        private Assembly ModAssembly => Assembly.GetExecutingAssembly();
     }
 }

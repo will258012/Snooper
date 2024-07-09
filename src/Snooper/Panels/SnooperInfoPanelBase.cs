@@ -2,12 +2,13 @@
 // Copyright (c) dymanoid. All rights reserved.
 // </copyright>
 
-namespace Snooper
+namespace Snooper.Panels
 {
     using System.Linq;
     using ColossalFramework.UI;
     using SkyTools.GameTools;
     using SkyTools.UI;
+    using Snooper.Utils;
     using UnityEngine;
 
     /// <summary>A base class for the customized world info panels.</summary>
@@ -133,21 +134,21 @@ namespace Snooper
             targetButton = itemsPanel.Find<UIButton>(TargetButtonName);
             if (targetButton == null)
             {
-                Debug.LogWarning($"The 'Snooper' mod failed to customize the info panel '{infoPanelName}'. Target button instance is null.");
+                Log.Warn($"Failed to customize the info panel '{infoPanelName}'. Target button instance is null.");
                 return false;
             }
 
             targetPanel = targetButton.parent as UIPanel;
             if (targetPanel == null)
             {
-                Debug.LogWarning($"The 'Snooper' mod failed to customize the info panel '{infoPanelName}'. The target button's parent is null.");
+                Log.Warn($"Failed to customize the info panel '{infoPanelName}'. The target button's parent is null.");
                 return false;
             }
 
             targetLabel = targetPanel.components.OfType<UILabel>().FirstOrDefault();
             if (targetLabel == null)
             {
-                Debug.LogWarning($"The 'Snooper' mod failed to customize the info panel '{infoPanelName}'. No target label found.");
+                Log.Warn($"Failed to customize the info panel '{infoPanelName}'. No target label found.");
                 return false;
             }
 
@@ -174,9 +175,9 @@ namespace Snooper
 
         private static void OriginButtonClick(UIComponent component, UIMouseEventParameter eventParam)
         {
-            if (component.objectUserData is ushort)
+            if (component.objectUserData is ushort buildingId)
             {
-                CameraHelper.NavigateToBuilding((ushort)component.objectUserData, false);
+                CameraHelper.NavigateToBuilding(buildingId, false);
             }
         }
     }

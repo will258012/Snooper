@@ -2,7 +2,7 @@
 // Copyright (c) dymanoid. All rights reserved.
 // </copyright>
 
-namespace Snooper
+namespace Snooper.Panels
 {
     using ColossalFramework.UI;
     using SkyTools.UI;

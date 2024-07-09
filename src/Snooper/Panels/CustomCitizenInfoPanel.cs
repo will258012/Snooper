@@ -1,8 +1,8 @@
-﻿// <copyright file="CustomCitizenInfoPanel.cs" company="dymanoid">
+// <copyright file="CustomCitizenInfoPanel.cs" company="dymanoid">
 // Copyright (c) dymanoid. All rights reserved.
 // </copyright>
 
-namespace Snooper
+namespace Snooper.Panels
 {
     using ColossalFramework.Globalization;
     using ColossalFramework.UI;
