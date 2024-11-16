@@ -8,8 +8,8 @@ namespace Snooper.Panels
     using ColossalFramework.UI;
     using SkyTools.GameTools;
     using SkyTools.UI;
-    using Snooper.Utils;
     using UnityEngine;
+    using WillCommons;
 
     /// <summary>A base class for the customized world info panels.</summary>
     /// <typeparam name="T">The type of the game world info panel to customize.</typeparam>
@@ -134,21 +134,21 @@ namespace Snooper.Panels
             targetButton = itemsPanel.Find<UIButton>(TargetButtonName);
             if (targetButton == null)
             {
-                Log.Warn($"Failed to customize the info panel '{infoPanelName}'. Target button instance is null.");
+                Logging.Warn($"Failed to customize the info panel '{infoPanelName}'. Target button instance is null.");
                 return false;
             }
 
             targetPanel = targetButton.parent as UIPanel;
             if (targetPanel == null)
             {
-                Log.Warn($"Failed to customize the info panel '{infoPanelName}'. The target button's parent is null.");
+                Logging.Warn($"Failed to customize the info panel '{infoPanelName}'. The target button's parent is null.");
                 return false;
             }
 
             targetLabel = targetPanel.components.OfType<UILabel>().FirstOrDefault();
             if (targetLabel == null)
             {
-                Log.Warn($"Failed to customize the info panel '{infoPanelName}'. No target label found.");
+                Logging.Warn($"Failed to customize the info panel '{infoPanelName}'. No target label found.");
                 return false;
             }
 

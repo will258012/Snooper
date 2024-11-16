@@ -14,11 +14,9 @@ namespace Snooper.Patches
     {
         /// <summary>Gets the patch for the set target method.</summary>
         [HarmonyPatch(typeof(CargoTruckAI), nameof(CargoTruckAI.SetTarget))]
-        [HarmonyPrefix]
         private static void Prefix(ref Vehicle data, ref ushort __state) => __state = data.m_targetBuilding;
 
         [HarmonyPatch(typeof(CargoTruckAI), nameof(CargoTruckAI.SetTarget))]
-        [HarmonyPostfix]
         private static void Postfix(ref Vehicle data, ushort targetBuilding, ref ushort __state)
         {
             if (__state != 0 && targetBuilding == 0 && data.m_touristCount == 0 && (data.m_flags & Vehicle.Flags.GoingBack) != 0)

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Snooper", "Snooper\Snooper.csproj", "{3A16420B-2BC3-4A65-9948-689CF7132E93}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "WillCommonsPatchingShared", "..\..\WillCommons\WillCommonsPatchingShared.shproj", "{B6425656-CEF8-46D5-B4DC-F8B36BAC4CAF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,5 +23,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7AB9F6EA-7CAE-4CB0-849D-63673C3B73F5}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\..\WillCommons\WillCommonsPatchingShared.projitems*{3a16420b-2bc3-4a65-9948-689cf7132e93}*SharedItemsImports = 5
+		..\..\WillCommons\WillCommonsPatchingShared.projitems*{b6425656-cef8-46d5-b4dc-f8b36bac4caf}*SharedItemsImports = 13
 	EndGlobalSection
 EndGlobal
